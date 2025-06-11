@@ -224,7 +224,7 @@
             <a href="576946480b52ad056d6f5bddf874399c83582ecf90963cc074a14c70580e7d9f.html"><i class="bi bi-chat-text"></i> Features</a>
         </li>
     </ul>
-    <span class="date-and-time"><a href="build-info.html"><i class="bi bi-info-circle"></i></a> Report generated 11-06-2025 14:37:31</span>
+    <span class="date-and-time"><a href="build-info.html"><i class="bi bi-info-circle"></i></a> Report generated 11-06-2025 21:07:56</span>
     <br style="clear:left"/>
 </div>
     <div class="clr"></div>
@@ -239,7 +239,7 @@
                         <td width="375px" valign="top">
                             <div class="test-count-summary">
                                 <div class="test-count-title">
-                                    2 tests
+                                    3 tests
 
                                     
 
@@ -309,19 +309,19 @@
                     <td>
                         <i class="bi bi-card-checklist"></i> Number of Scenarios
                     </td>
-                    <td>2</td>
+                    <td>3</td>
                 </tr>
                 <tr scope="row">
                     <td>
                         <i class="bi bi-caret-right"></i> Total Number of Test Cases
                     </td>
-                    <td>2</td>
+                    <td>3</td>
                 </tr>
                 <tr scope="row">
                     <td>
                         <i class="bi bi-flag-fill"></i> Tests Started
                     </td>
-                    <td>Jun 11, 2025 14:37:19</td>
+                    <td>Jun 11, 2025 21:07:36</td>
                 </tr>
                 <tr scope="row">
                     <td>
@@ -348,21 +348,21 @@
                         <i class="bi bi-skip-start"></i> Slowest
                         Test
                     </td>
-                    <td>3s</td>
+                    <td>5s</td>
                 </tr>
                 <tr scope="row">
                     <td>
                         <i class="bi bi-stopwatch"></i> Average
                         Execution Time
                     </td>
-                    <td>3s</td>
+                    <td>4s</td>
                 </tr>
                 <tr scope="row">
                     <td>
                         <i class="bi bi-stopwatch-fill"></i> Total
                         Execution Time
                     </td>
-                    <td>6s</td>
+                    <td>13s</td>
                 </tr>
                 </tbody>
             </table>
@@ -433,8 +433,103 @@ Haxxor sends a GET request to &apos;/api/Challenges/?sort=name&apos;
                                                                                     <td>
                                                                                             <a href="#"> Juice Shop is susceptible to XSS attacks</a>
                                                                                     </td>
-                                                                                    <td>1</td>
+                                                                                    <td>2</td>
                                                                                     <td>Given Haxxor goes to the Juice Shop
+Haxxor opens the Juice Shop
+Haxxor navigates to &quot;/&quot;
+Haxxor ensures that true does equal true
+Haxxor sets cookie: { name: &quot;cookieconsent_status&quot;, value: &quot;dismiss&quot; }
+Haxxor sets cookie: { name: &quot;welcomebanner_status&quot;, value: &quot;dismiss&quot; }
+Haxxor sets cookie: { name: &quot;language&quot;, value: &quot;en&quot; }
+Haxxor reloads the page
+When she searches for &quot;&lt;iframe src=\&quot;javascript:alert(`xss`)\&quot;&gt;&quot;
+Haxxor searches for &lt;iframe src=&quot;javascript:alert(`xss`)&quot;&gt;
+Haxxor clicks on Search button
+Haxxor enters &quot;&lt;iframe src=&quot;javascript:alert(`xss`)&quot;&gt;&quot; into Search input
+Haxxor presses key Enter in Search input
+Haxxor checks whether &apos;&lt;iframe src=&quot;javascript:alert(`xss`)&quot;&gt;&apos; does include &quot;javascript:alert&quot;
+Haxxor waits until class ModalDialog {
+    /**
+     * Returns a promise that resolves to `true`
+     * when a modal dialog has been handled, so accepted or dismissed.
+     * Returns `false` for dialogs that haven&apos;t been handled yet.
+     *
+     * Useful when a JavaScript modal dialog is generated after a delay,
+     * e.g. triggered by `setTimeout`.
+     *
+     * #### Example usage
+     *
+     * ```ts
+     * import { actorCalled, Wait } from &apos;@serenity-js/core&apos;
+     * import { Ensure, equals, isPresent } from &apos;@serenity-js/assertions&apos;
+     * import { ModalDialog } from &apos;@serenity-js/web&apos;
+     *
+     * await actorCalled(&apos;Nick&apos;).attemptsTo(
+     *   ModalDialog.acceptNext(),
+     *   Wait.until(ModalDialog, isPresent()),
+     *   Ensure.that(ModalDialog.lastDialogState(), equals(&apos;accepted&apos;)),
+     * )
+     * ```
+     */
+    static isPresent() {
+        return Page_1.Page.current().modalDialog().last().isPresent();
+    }
+    /**
+     * Produces an [interaction](https://serenity-js.org/api/core/class/Interaction/) that invokes [`ModalDialog.acceptNext`](https://serenity-js.org/api/web/class/ModalDialog/#acceptNext).
+     */
+    static acceptNext() {
+        return Page_1.Page.current().modalDialog().acceptNext()
+            .describedAs(&apos;Haxxor accepts next modal dialog window&apos;);
+    }
+    /**
+     * Produces an [interaction](https://serenity-js.org/api/core/class/Interaction/) that invokes [`ModalDialog.acceptNextWithValue`](https://serenity-js.org/api/web/class/ModalDialog/#acceptNextWithValue).
+     *
+     * @param value
+     */
+    static acceptNextWithValue(value) {
+        return Page_1.Page.current().modalDialog().acceptNextWithValue(value)
+            .describedAs((0, core_1.the) `Haxxor accepts next modal dialog window with value ${value}`);
+    }
+    /**
+     * Produces an [interaction](https://serenity-js.org/api/core/class/Interaction/) that invokes [`ModalDialog.dismissNext`](https://serenity-js.org/api/web/class/ModalDialog/#dismissNext).
+     */
+    static dismissNext() {
+        return Page_1.Page.current().modalDialog().dismissNext()
+            .describedAs((0, core_1.the) `Haxxor dismisses next modal dialog window`);
+    }
+    /**
+     * [`QuestionAdapter`](https://serenity-js.org/api/core/#QuestionAdapter) that resolves to [`ModalDialog.message`](https://serenity-js.org/api/web/class/ModalDialog/#message) for the current [`Page`](https://serenity-js.org/api/web/class/Page/).
+     */
+    static lastDialogMessage() {
+        return Page_1.Page.current().modalDialog().last().message()
+            .describedAs(`last dialog message`);
+    }
+    /**
+     * [`QuestionAdapter`](https://serenity-js.org/api/core/#QuestionAdapter) that resolves to [`ModalDialog.state`](https://serenity-js.org/api/web/class/ModalDialog/#state) for the current [`Page`](https://serenity-js.org/api/web/class/Page/).
+     */
+    static lastDialogState() {
+        return Page_1.Page.current().modalDialog().last().state()
+            .describedAs(`last dialog state`);
+    }
+    /**
+     * Returns `accepted` or `dismissed` for dialogs that have been handled,
+     * or `absent` for those that haven&apos;t been handled yet.
+     */
+    state() {
+        return this.constructor.name
+            .replace(&apos;ModalDialog&apos;, &apos;&apos;)
+            .toLowerCase();
+    }
+} does become present
+Haxxor takes notes:
+- alert_message: &quot;xss&quot;
+Then she sees an alert message containing &quot;xss&quot;
+Haxxor confirms alert message is xss
+Haxxor ensures that &quot;xss&quot; does equal &quot;xss&quot;
+And she sees she has solved the &quot;DOM XSS&quot; challenge
+Haxxor confirms that DOM XSS has been solved
+Haxxor sends a GET request to &apos;/api/Challenges/?sort=name&apos;
+Given Haxxor goes to the Juice Shop
 Haxxor opens the Juice Shop
 Haxxor navigates to &quot;/&quot;
 Haxxor ensures that true does equal true
@@ -447,11 +542,12 @@ Haxxor searches for &lt;iframe width=&quot;100%&quot; height=&quot;166&quot; scr
 Haxxor clicks on Search button
 Haxxor enters &quot;&lt;iframe width=&quot;100%&quot; height=&quot;166&quot; scrolling=&quot;no&quot; frameborder=&quot;no&quot; allow=&quot;autoplay&quot; src=&quot;https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/771984076&amp;color=%23ff5500&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true&quot;&gt;&lt;/iframe&gt;&quot; into Search input
 Haxxor presses key Enter in Search input
+Haxxor checks whether &apos;&lt;iframe width=&quot;100%&quot; height=&quot;166&quot; scrolling=&quot;no&quot; frameborder=&quot;no&quot; allow=&quot;autoplay&quot; src=&quot;https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/771984076&amp;color=%23ff5500&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true&quot;&gt;&lt;/iframe&gt;&apos; does include &quot;javascript:alert&quot;
 Then she sees she has solved the &quot;Bonus Payload&quot; challenge
 Haxxor confirms that Bonus Payload has been solved
 Haxxor sends a GET request to &apos;/api/Challenges/?sort=name&apos;
 </td>
-                                                                                    <td>1</td>
+                                                                                    <td>2</td>
                                                                                     <td>100%</td>
                                                                                     <td>
                                                                                             <a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a>
@@ -461,7 +557,7 @@ Haxxor sends a GET request to &apos;/api/Challenges/?sort=name&apos;
                                                                                                 <div class="progress-bar"
                                                                                                      role="progressbar"
                                                                                                      style="width: 100%; background-color: #b0cf73"
-                                                                                                     aria-valuenow="1"
+                                                                                                     aria-valuenow="2"
                                                                                                      title="100% success"
                                                                                                      aria-valuemin="0"
                                                                                                      aria-valuemax="100">
@@ -490,7 +586,7 @@ Haxxor sends a GET request to &apos;/api/Challenges/?sort=name&apos;
                                     </a>
                                     <a href="3d1782e7b88c1a4ab37f762c6270ef032bbd4c353e79938675367d6c1b74a1f7.html">
                                     <span class="tag-badge badge" style="background-color:#b0cf73; margin:1em;padding:4px;">
-                                        <i class="bi bi-tag-fill"></i> Xss-Dom&nbsp;&nbsp;&nbsp;1
+                                        <i class="bi bi-tag-fill"></i> Xss-Dom&nbsp;&nbsp;&nbsp;2
                                     </span>
                                     </a>
                             </div>
@@ -507,7 +603,7 @@ Haxxor sends a GET request to &apos;/api/Challenges/?sort=name&apos;
                                     </a>
                                     <a href="a0bd0ea041c65035691c2becfb4a264904d80b9e50785d32ea1aec206e62003b.html">
                                     <span class="tag-badge badge" style="background-color:#b0cf73; margin:1em;padding:4px;">
-                                        <i class="bi bi-tag-fill"></i> Xss-Dom/Juice Shop Is Susceptible To XSS Attacks&nbsp;&nbsp;&nbsp;1
+                                        <i class="bi bi-tag-fill"></i> Xss-Dom/Juice Shop Is Susceptible To XSS Attacks&nbsp;&nbsp;&nbsp;2
                                     </span>
                                     </a>
                             </div>
@@ -530,7 +626,7 @@ Haxxor sends a GET request to &apos;/api/Challenges/?sort=name&apos;
                     <td>
                         <i class="bi bi-card-checklist"></i> Number of Scenarios
                     </td>
-                    <td>2</td>
+                    <td>3</td>
                     <td>
                         <i class="bi bi-stopwatch"></i> Total
                         Duration
@@ -541,7 +637,7 @@ Haxxor sends a GET request to &apos;/api/Challenges/?sort=name&apos;
                     <td>
                         <i class="bi bi-caret-right"></i> Total Number of Test Cases
                     </td>
-                    <td>2</td>
+                    <td>3</td>
                     <td>
                         <i class="bi bi-trophy"></i> Fastest Test
                     </td>
@@ -556,18 +652,18 @@ Haxxor sends a GET request to &apos;/api/Challenges/?sort=name&apos;
                         <i class="bi bi-skip-start"></i> Slowest
                         Test
                     </td>
-                    <td>3s</td>
+                    <td>5s</td>
                 </tr>
                 <tr scope="row">
                     <td>
                         <i class="bi bi-flag-fill"></i> Tests Started
                     </td>
-                    <td>Jun 11, 2025 14:37:19</td>
+                    <td>Jun 11, 2025 21:07:36</td>
                     <td>
                         <i class="bi bi-stopwatch"></i> Average
                         Execution Time
                     </td>
-                    <td>3s</td>
+                    <td>4s</td>
                 </tr>
                 <tr scope="row">
                     <td>
@@ -579,7 +675,7 @@ Haxxor sends a GET request to &apos;/api/Challenges/?sort=name&apos;
                         <i class="bi bi-stopwatch-fill"></i> Total
                         Execution Time
                     </td>
-                    <td>6s</td>
+                    <td>13s</td>
                 </tr>
                 </tbody>
             </table>
@@ -616,8 +712,29 @@ Haxxor sends a GET request to &apos;/api/Challenges/?sort=name&apos;
 When she opens the score board
 Then she sees she has solved the &amp;quot;Score Board&amp;quot; challenge
 </td>
-                                                                        <td data-order="1749652639">14:37:19</td>
-                                                                        <td>3s 133ms</td>
+                                                                        <td data-order="1749676056">21:07:36</td>
+                                                                        <td>3s 919ms</td>
+                                                                        <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                    style="display:none">SUCCESS</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="scenario-result SUCCESS">
+                                                                        <td>
+                                                                                <a href="#">Juice Shop is susceptible to XSS attacks</a>
+                                                                        </td>
+                                                                        <td data-order="Haxxor injects HTML into the search input">
+                                                                                    <a href="ecd40b0c0d44db7960a0dcb04a738b019e2465e127ab008c3f92104330cb9b65.html">Haxxor injects HTML into the search input</a>
+                                                                        </td>
+                                                                        <td><span style="display:none"></span>
+                                                                        </td>
+                                                                        <td>4</td>
+                                                                        <td>Given Haxxor goes to the Juice Shop
+When she searches for &amp;quot;&amp;lt;iframe src=\&amp;quot;javascript:alert(`xss`)\&amp;quot;&amp;gt;&amp;quot;
+Then she sees an alert message containing &amp;quot;xss&amp;quot;
+And she sees she has solved the &amp;quot;DOM XSS&amp;quot; challenge
+</td>
+                                                                        <td data-order="1749676060">21:07:40</td>
+                                                                        <td>5s 226ms</td>
                                                                         <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
                                                                                     style="display:none">SUCCESS</span>
                                                                         </td>
@@ -636,8 +753,8 @@ Then she sees she has solved the &amp;quot;Score Board&amp;quot; challenge
 When she searches for &amp;quot;&amp;lt;iframe width=\&amp;quot;100%\&amp;quot; height=\&amp;quot;166\&amp;quot; scrolling=\&amp;quot;no\&amp;quot; frameborder=\&amp;quot;no\&amp;quot; allow=\&amp;quot;autoplay\&amp;quot; src=\&amp;quot;https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/771984076&amp;amp;color=%23ff5500&amp;amp;auto_play=true&amp;amp;hide_related=false&amp;amp;show_comments=true&amp;amp;show_user=true&amp;amp;show_reposts=false&amp;amp;show_teaser=true\&amp;quot;&amp;gt;&amp;lt;/iframe&amp;gt;&amp;quot;
 Then she sees she has solved the &amp;quot;Bonus Payload&amp;quot; challenge
 </td>
-                                                                        <td data-order="1749652642">14:37:22</td>
-                                                                        <td>3s 495ms</td>
+                                                                        <td data-order="1749676065">21:07:45</td>
+                                                                        <td>4s 561ms</td>
                                                                         <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
                                                                                     style="display:none">SUCCESS</span>
                                                                         </td>
@@ -672,7 +789,7 @@ Then she sees she has solved the &amp;quot;Bonus Payload&amp;quot; challenge
                                     </a>
                                     <a href="3d1782e7b88c1a4ab37f762c6270ef032bbd4c353e79938675367d6c1b74a1f7.html">
                                     <span class="tag-badge badge" style="background-color:#b0cf73; margin:1em;padding:4px;">
-                                        <i class="bi bi-tag-fill"></i> Xss-Dom&nbsp;&nbsp;&nbsp;1
+                                        <i class="bi bi-tag-fill"></i> Xss-Dom&nbsp;&nbsp;&nbsp;2
                                     </span>
                                     </a>
                             </div>
@@ -689,7 +806,7 @@ Then she sees she has solved the &amp;quot;Bonus Payload&amp;quot; challenge
                                     </a>
                                     <a href="a0bd0ea041c65035691c2becfb4a264904d80b9e50785d32ea1aec206e62003b.html">
                                     <span class="tag-badge badge" style="background-color:#b0cf73; margin:1em;padding:4px;">
-                                        <i class="bi bi-tag-fill"></i> Xss-Dom/Juice Shop Is Susceptible To XSS Attacks&nbsp;&nbsp;&nbsp;1
+                                        <i class="bi bi-tag-fill"></i> Xss-Dom/Juice Shop Is Susceptible To XSS Attacks&nbsp;&nbsp;&nbsp;2
                                     </span>
                                     </a>
                             </div>
@@ -743,7 +860,7 @@ Then she sees she has solved the &amp;quot;Bonus Payload&amp;quot; challenge
             datasets: [{
                 label: 'Test Results',
                 fill: false,
-                data: [2,0,0,0,0,0,0,0],
+                data: [3,0,0,0,0,0,0,0],
                 backgroundColor: ['rgba(153,204,51,0.5)','rgba(165, 199, 238, 0.5)','rgba(168, 168, 168, 0.5)','rgba(238, 224, 152, 0.75)','rgba(255, 153, 102, 0.5)','rgba(255, 22, 49, 0.5)','rgba(255, 97, 8, 0.5)','rgba(255, 104, 255, 0.5)','rgba(83, 50, 168, 0.5)'],
                 borderColor: ['rgba(153,204,51,1)','rgba(165, 199, 238, 1)','rgba(168, 168, 168, 1)','rgba(238, 224, 152, 1)','rgba(255, 153, 102, 1)','rgba(255, 22, 49, 1)','rgba(255, 97, 8, 1)','rgba(255, 104, 255, 1)','rgba(83, 50, 168, 1)'],
                 borderWidth: 1,
@@ -839,7 +956,7 @@ Then she sees she has solved the &amp;quot;Bonus Payload&amp;quot; challenge
             datasets: [
                 {
                     label: 'Automated',
-                    data: [2,0,0,0,0,0,0,0],
+                    data: [3,0,0,0,0,0,0,0],
                     backgroundColor: ['rgba(153,204,51,0.5)','rgba(165, 199, 238, 0.5)','rgba(168, 168, 168, 0.5)','rgba(238, 224, 152, 0.75)','rgba(255, 153, 102, 0.5)','rgba(255, 22, 49, 0.5)','rgba(255, 97, 8, 0.5)','rgba(255, 104, 255, 0.5)','rgba(83, 50, 168, 0.5)'],
                     borderColor: ['rgba(153,204,51,1)','rgba(165, 199, 238, 1)','rgba(168, 168, 168, 1)','rgba(238, 224, 152, 1)','rgba(255, 153, 102, 1)','rgba(255, 22, 49, 1)','rgba(255, 97, 8, 1)','rgba(255, 104, 255, 1)','rgba(83, 50, 168, 1)'],
                     borderWidth: 1
@@ -922,7 +1039,7 @@ Then she sees she has solved the &amp;quot;Bonus Payload&amp;quot; challenge
             datasets: [{
                 label: 'Number of tests per duration',
                 fill: false,
-                data: ['0','2','0','0','0','0','0','0'],
+                data: ['0','3','0','0','0','0','0','0'],
                 backgroundColor: 'rgba(83, 146, 255,0.5)',
                 borderColor: 'rgba(83, 146, 255, 1)',
             }]
@@ -1009,7 +1126,7 @@ Then she sees she has solved the &amp;quot;Bonus Payload&amp;quot; challenge
             datasets: [
                 {
                     label: ['Passing Tests'],
-                    data: [1,1,0],
+                    data: [1,2,0],
                     backgroundColor: [ 'rgba(153,204,51,0.5)' ]
                 },
                 {
