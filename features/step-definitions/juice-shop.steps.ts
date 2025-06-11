@@ -11,7 +11,7 @@ Given('{actor} goes to the Juice Shop', async (actor: Actor) =>
 
 When('{pronoun} searches for {string}', async (actor: Actor, searchTerm: string) =>
     actor.attemptsTo(
-        JuiceShop.searchFor(searchTerm)
+        JuiceShop.searchFor(searchTerm),
     )
 )
 
@@ -21,9 +21,15 @@ Then('{pronoun} sees he/she/they has/have solved the {string} challenge', async 
     );
 })
 
-When('{pronoun} opens the score board', (actor: Actor) => {
+When('{pronoun} opens the score board', async (actor: Actor) => {
     actor.attemptsTo(
         ScoreBoard.open()
+    )
+})
+
+Then('{pronoun} sees an alert message containing {string}', async (actor: Actor, alertMessage: string) => {
+    actor.attemptsTo(
+        JuiceShop.confirmAlertMessageIs(alertMessage)
     )
 })
 
