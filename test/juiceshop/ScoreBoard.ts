@@ -9,7 +9,8 @@ export const ScoreBoard = {
         Task.where(`#actor confirms that ${challengeName} has been solved`,
             Send.a(GetRequest.to(`/api/Challenges/?name=${challengeName}`)),
             Ensure.that(
-                LastResponse.body<ChallengeData>().data[0]
+                LastResponse.body<ChallengeData>()
+                .data[0]
                 .solved,
                 isTrue()
             )
@@ -23,11 +24,9 @@ export const ScoreBoard = {
 };
 
 interface ChallengeData {
-    status: string,
     data: Challenge[]
 }
 
 interface Challenge {
-    name: string,
     solved: boolean
 }
