@@ -43,10 +43,9 @@ jobs:
           folder: target/site/serenity
           clean: true
           
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: (!cancelled())
+
+      - name: Publish Test Report
+        uses: ctrf-io/github-test-reporter@v1
         with:
-          files: |
-            target/site/serenity/summary.txt
-            
+          report-path: 'target/site/serenity/*.json'
+        if: (!cancelled())            
