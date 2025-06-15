@@ -1,5 +1,5 @@
-import { Ensure, equals, includes } from '@serenity-js/assertions';
-import { Check, notes, Task } from '@serenity-js/core';
+import { Ensure, equals, includes, isPresent } from '@serenity-js/assertions';
+import { Check, notes, Task, Wait } from '@serenity-js/core';
 import { By, Click, Cookie,Enter,Key,ModalDialog,Navigate, PageElement, Press } from '@serenity-js/web';
 
 export const JuiceShop = {
@@ -27,11 +27,10 @@ export const JuiceShop = {
             `#actor searches for ${searchTerm}`,
             Click.on(SearchBar.searchButton()),
             Enter.theValue(searchTerm).into(SearchBar.searchInput()),
-            ModalDialog.dismissNext(),
             Press.the(Key.Enter).in(SearchBar.searchInput()),
             Check.whether(searchTerm, includes('javascript:alert'))
             .andIfSo(
-                // Wait.until(ModalDialog, isPresent()),
+                Wait.until(ModalDialog, isPresent()),
                 notes().set('alert_message', ModalDialog.lastDialogMessage())
             )
             
