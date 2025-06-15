@@ -1,5 +1,5 @@
-import { Ensure, equals, includes, isPresent } from '@serenity-js/assertions';
-import { Check, notes, Task, Wait } from '@serenity-js/core';
+import { Ensure, equals, includes } from '@serenity-js/assertions';
+import { Check, notes, Task } from '@serenity-js/core';
 import { By, Click, Cookie,Enter,Key,ModalDialog,Navigate, PageElement, Press } from '@serenity-js/web';
 
 export const JuiceShop = {
