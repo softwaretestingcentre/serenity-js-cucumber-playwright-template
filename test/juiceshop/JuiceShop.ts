@@ -27,10 +27,11 @@ export const JuiceShop = {
             `#actor searches for ${searchTerm}`,
             Click.on(SearchBar.searchButton()),
             Enter.theValue(searchTerm).into(SearchBar.searchInput()),
+            ModalDialog.dismissNext(),
             Press.the(Key.Enter).in(SearchBar.searchInput()),
             Check.whether(searchTerm, includes('javascript:alert'))
             .andIfSo(
-                Wait.until(ModalDialog, isPresent()),
+                // Wait.until(ModalDialog, isPresent()),
                 notes().set('alert_message', ModalDialog.lastDialogMessage())
             )
             
