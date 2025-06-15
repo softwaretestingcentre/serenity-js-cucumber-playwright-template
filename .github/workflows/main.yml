@@ -48,4 +48,5 @@ jobs:
         if: (!cancelled())
         with:
           files: |
-            target/site-serenity/summary.txt
+            target/site/serenity/summary.txt
+            
