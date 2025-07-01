@@ -9,7 +9,7 @@ Given('{actor} goes to the Juice Shop', async (actor: Actor) =>
     )
 );
 
-When('{pronoun} searches for {string}', async (actor: Actor, searchTerm: string) =>
+When('{pronoun} searches for {}', async (actor: Actor, searchTerm: string) =>
     actor.attemptsTo(
         JuiceShop.searchFor(searchTerm),
     )

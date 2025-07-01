@@ -27,18 +27,24 @@ BeforeAll(async () => {
     // Launch the browser once before all the tests
     // Serenity/JS will take care of managing Playwright browser context and browser tabs.
     browser = await playwright.chromium.launch({
-        headless: true,
+        headless: false,
     });
 
     // Configure Serenity/JS
     configure({
 
         // Configure Serenity/JS actors to use Playwright browser
-        actors: new Actors(browser, {
-            baseURL:                    'https://stc-owasp-juice-dnebatcgf2ddf4cr.uksouth-01.azurewebsites.net/#/',//'http://localhost:7080/',
-            defaultNavigationTimeout:   timeouts.playwright.defaultNavigationTimeout.inMilliseconds(),
-            defaultTimeout:             timeouts.playwright.defaultTimeout.inMilliseconds(),
-        }),
+        actors: new Actors(
+            browser,
+            {
+                baseURL:                    'https://stc-owasp-juice-dnebatcgf2ddf4cr.uksouth-01.azurewebsites.net/#/',//'http://localhost:7080/',
+                // baseURL: 'https://the-internet.herokuapp.com/',
+            },
+            {
+                defaultNavigationTimeout: timeouts.playwright.defaultNavigationTimeout.inMilliseconds(),
+                defaultTimeout: timeouts.playwright.defaultTimeout.inMilliseconds(),
+            }
+        ),
 
         // Configure Serenity/JS reporting services
         crew: [
