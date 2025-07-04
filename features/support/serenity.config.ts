@@ -1,9 +1,10 @@
 import { AfterAll, BeforeAll, setDefaultTimeout } from '@cucumber/cucumber';
-import { configure, Duration } from '@serenity-js/core';
+import { actorCalled, configure, Duration } from '@serenity-js/core';
 import path from 'path';
 import * as playwright from 'playwright';
 
 import { Actors } from '../../test';
+import { JuiceShop } from '../../test/juiceshop';
 
 const timeouts = {
     cucumber: {
@@ -50,8 +51,8 @@ BeforeAll(async () => {
         crew: [
             [ '@serenity-js/console-reporter', { theme: 'auto' } ],
             [ '@serenity-js/web:Photographer', {
-                // strategy: 'TakePhotosOfInteractions',    // capture screenshots of all the interactions; slower but more comprehensive
-                strategy: 'TakePhotosOfFailures',           // capture screenshots of failed interactions; much faster
+                strategy: 'TakePhotosOfInteractions',    // capture screenshots of all the interactions; slower but more comprehensive
+                // strategy: 'TakePhotosOfFailures',           // capture screenshots of failed interactions; much faster
             } ],
             [ '@serenity-js/core:ArtifactArchiver', { outputDirectory: path.resolve(__dirname, '../../target/site/serenity') } ],
             [ '@serenity-js/serenity-bdd', { specDirectory: path.resolve(__dirname, '../../features') } ],
@@ -59,6 +60,9 @@ BeforeAll(async () => {
 
         cueTimeout: timeouts.serenity.cueTimeout,
     });
+    await actorCalled("Haxxor").attemptsTo(
+        JuiceShop.open()
+    );
 });
 
 AfterAll(async () => {

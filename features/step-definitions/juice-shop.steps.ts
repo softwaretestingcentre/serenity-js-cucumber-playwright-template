@@ -2,6 +2,8 @@ import { Given, Then, When } from '@cucumber/cucumber';
 import { Actor } from '@serenity-js/core';
 
 import { JuiceShop, ScoreBoard } from '../../test/juiceshop';
+import { ModalDialog } from '@serenity-js/web';
+import { Ensure, equals } from '@serenity-js/assertions';
 
 Given('{actor} goes to the Juice Shop', async (actor: Actor) =>
     actor.attemptsTo(
@@ -27,9 +29,9 @@ When('{pronoun} opens the score board', async (actor: Actor) => {
     )
 })
 
-Then('{pronoun} sees an alert message containing {string}', async (actor: Actor, alertMessage: string) => {
+Then('{pronoun} should see no alert message', (actor: Actor) => {
     actor.attemptsTo(
-        JuiceShop.confirmAlertMessageIs(alertMessage)
+        Ensure.that(ModalDialog.lastDialogState(), equals('absent'))
     )
 })
 

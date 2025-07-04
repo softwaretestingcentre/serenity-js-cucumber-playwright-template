@@ -1,6 +1,5 @@
-import { Ensure, equals, includes, isPresent } from '@serenity-js/assertions';
-import { Check, notes, Task, Wait } from '@serenity-js/core';
-import { By, Click, Cookie,Enter,Key,ModalDialog,Navigate, PageElement, Press } from '@serenity-js/web';
+import { Task, Wait } from '@serenity-js/core';
+import { By, Click, Cookie,Enter,isVisible,Key,ModalDialog,Navigate, PageElement, Press } from '@serenity-js/web';
 
 export const JuiceShop = {
     open: () => 
@@ -25,30 +24,26 @@ export const JuiceShop = {
     searchFor: (searchTerm: string) =>
         Task.where(
             `#actor searches for ${searchTerm}`,
-            Click.on(SearchBar.searchButton()),
-            Enter.theValue(searchTerm).into(SearchBar.searchInput()),
-            Press.the(Key.Enter).in(SearchBar.searchInput()),
-            Check.whether(searchTerm, includes('javascript:alert'))
-            .andIfSo(
-                Wait.until(ModalDialog, isPresent()),
-                notes().set('alert_message', ModalDialog.lastDialogMessage())
-            )
-            
+            Navigate.to('/'),
+            Wait.until(Search.button(), isVisible()),
+            Click.on(Search.button()),
+            Wait.until(Search.input(), isVisible()),
+            Enter.theValue(searchTerm).into(Search.input()),
+            ModalDialog.dismissNext(),
+            Press.the(Key.Enter).in(Search.input()),
+            Wait.until(Search.result(), isVisible()),            
         ),
-
-    confirmAlertMessageIs: (alertMessage: string) =>
-        Task.where(
-            `#actor confirms alert message is ${alertMessage}`,
-            Ensure.that(notes().get('alert_message'), equals(alertMessage))
-        )
 
 }
 
-const SearchBar = {
-    searchButton: () =>
+const Search = {
+    button: () =>
         PageElement.located(By.css('#searchQuery')).describedAs('Search button'),
 
-    searchInput: () =>
+    input: () =>
         PageElement.located(By.css('app-mat-search-bar input')).describedAs('Search input'),
+
+    result: () =>
+        PageElement.located(By.css('app-search-result')).describedAs("'Search results"),
 
 }

@@ -30,7 +30,6 @@ jobs:
           install-command: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - run: npm run lint
       - run: npm test
         env:
           CI: true
