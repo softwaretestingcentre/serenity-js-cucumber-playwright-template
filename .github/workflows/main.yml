@@ -41,10 +41,9 @@ jobs:
           branch: gh-pages
           folder: target/site/serenity
           clean: true
-          
 
-      - name: Publish Test Report
-        uses: ctrf-io/github-test-reporter@v1
-        with:
-          report-path: 'target/site/serenity/*.json'
-        if: (!cancelled())            
+      - name: Publish Results
+        run:
+          echo "[Test Results](https://softwaretestingcentre.github.io/serenity-js-cucumber-playwright-template/)" >> $GITHUB_STEP_SUMMARY
+
+          
