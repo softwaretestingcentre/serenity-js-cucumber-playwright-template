@@ -23,9 +23,9 @@ Then('{pronoun} sees he/she/they has/have solved the {string} challenge', async 
     );
 })
 
-When('{pronoun} opens the score board', async (actor: Actor) => {
+When('{pronoun} opens the {}', async (actor: Actor, hiddenPage: string) => {
     actor.attemptsTo(
-        ScoreBoard.open()
+        JuiceShop.goto(hiddenPage)
     )
 })
 

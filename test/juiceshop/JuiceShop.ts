@@ -1,6 +1,11 @@
 import { Task, Wait } from '@serenity-js/core';
 import { By, Click, Cookie,Enter,isVisible,Key,ModalDialog,Navigate, PageElement, Press } from '@serenity-js/web';
 
+const pages = {
+    "Privacy Policy": "/#/privacy-security/privacy-policy",
+    "Score Board": "/#/score-board"
+}
+
 export const JuiceShop = {
     open: () => 
         Task.where(
@@ -33,6 +38,12 @@ export const JuiceShop = {
             Press.the(Key.Enter).in(Search.input()),
             Wait.until(Search.result(), isVisible()),            
         ),
+
+    goto: (pageName) => 
+        Task.where(
+            `#actor opens ${pageName}`,
+            Navigate.to(pages[pageName])
+        )
 
 }
 

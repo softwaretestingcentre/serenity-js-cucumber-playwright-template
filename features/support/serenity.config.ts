@@ -38,7 +38,7 @@ BeforeAll(async () => {
         actors: new Actors(
             browser,
             {
-                baseURL:                    'https://stc-owasp-juice-dnebatcgf2ddf4cr.uksouth-01.azurewebsites.net/#/',//'http://localhost:7080/',
+                baseURL: 'https://juice-shop.herokuapp.com/#/',//                   'https://stc-owasp-juice-dnebatcgf2ddf4cr.uksouth-01.azurewebsites.net/#/',//'http://localhost:7080/',
                 // baseURL: 'https://the-internet.herokuapp.com/',
             },
             {
