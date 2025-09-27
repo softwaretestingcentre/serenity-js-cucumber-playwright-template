@@ -29,7 +29,7 @@ export const JuiceShop = {
     searchFor: (searchTerm: string) =>
         Task.where(
             `#actor searches for ${searchTerm}`,
-            Navigate.to('/'),
+            // Navigate.to('/'),
             Wait.until(Search.button(), isVisible()),
             Click.on(Search.button()),
             Wait.until(Search.input(), isVisible()),

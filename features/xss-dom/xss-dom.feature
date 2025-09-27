@@ -1,5 +1,8 @@
 Feature: Juice Shop is susceptible to XSS attacks
 
+  Background:
+    Given Haxxor goes to the Juice Shop
+
   Scenario: Haxxor injects HTML into the search input
     When she searches for '<iframe src="javascript:alert(`xss`)">'
     Then she sees she has solved the "DOM XSS" challenge
@@ -19,3 +22,8 @@ Feature: Juice Shop is susceptible to XSS attacks
       | <svg/onload=alert(`XSS`)>              |
       | "><iframe src=javascript:alert(alert)> |
       | <body onload=alert(`XSS`)>             |
+
+  @thisone
+  Scenario: Haxxor checks the score
+  When she searches for chicken
+  Then she sees she has solved the "<Hidden Page>" challenge
