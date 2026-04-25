@@ -1,18 +1,18 @@
 import { AfterAll, BeforeAll, setDefaultTimeout } from '@cucumber/cucumber';
-import { actorCalled, configure, Duration } from '@serenity-js/core';
+import { configure, Duration } from '@serenity-js/core';
 import path from 'path';
 import * as playwright from 'playwright';
 
 import { Actors } from '../../test';
-import { JuiceShop } from '../../test/juiceshop';
 
 const timeouts = {
     cucumber: {
-        step: Duration.ofSeconds(30),                       // how long to wait for a Cucumber step to complete
+        step: Duration.ofSeconds(300),                       // how long to wait for a Cucumber step to complete
     },
     playwright: {
-        defaultNavigationTimeout: Duration.ofSeconds(10),   // how long to wait for a page to load
-        defaultTimeout:           Duration.ofSeconds(5),    // how long to wait for an element to show up
+        defaultNavigationTimeout: Duration.ofSeconds(60),   // how long to wait for a page to load
+        defaultTimeout:           Duration.ofSeconds(15),    // how long to wait for an element to show up
+
     },
     serenity: {
         cueTimeout:               Duration.ofSeconds(5),    // how long to wait for Serenity/JS to complete any post-test activities, like saving screenshots and reports
@@ -28,7 +28,7 @@ BeforeAll(async () => {
     // Launch the browser once before all the tests
     // Serenity/JS will take care of managing Playwright browser context and browser tabs.
     browser = await playwright.chromium.launch({
-        headless: true,
+        headless: false,
     });
 
     // Configure Serenity/JS
@@ -38,12 +38,14 @@ BeforeAll(async () => {
         actors: new Actors(
             browser,
             {
-                baseURL: 'https://juice-shop.herokuapp.com/#/',//                   'https://stc-owasp-juice-dnebatcgf2ddf4cr.uksouth-01.azurewebsites.net/#/',//'http://localhost:7080/',
+                baseURL: 'http://localhost:3000/#/',//                   'https://stc-owasp-juice-dnebatcgf2ddf4cr.uksouth-01.azurewebsites.net/#/',//'http://localhost:7080/',
+                // baseURL: 'https://juice-shop.herokuapp.com/#/',//                   'https://stc-owasp-juice-dnebatcgf2ddf4cr.uksouth-01.azurewebsites.net/#/',//'http://localhost:7080/',
                 // baseURL: 'https://the-internet.herokuapp.com/',
             },
             {
                 defaultNavigationTimeout: timeouts.playwright.defaultNavigationTimeout.inMilliseconds(),
                 defaultTimeout: timeouts.playwright.defaultTimeout.inMilliseconds(),
+                defaultNavigationWaitUntil: 'domcontentloaded'
             }
         ),
 
@@ -60,9 +62,9 @@ BeforeAll(async () => {
 
         cueTimeout: timeouts.serenity.cueTimeout,
     });
-    await actorCalled("Haxxor").attemptsTo(
-        JuiceShop.open()
-    );
+    // await actorCalled("Haxxor").attemptsTo(
+    //     JuiceShop.open()
+    // );
 });
 
 AfterAll(async () => {

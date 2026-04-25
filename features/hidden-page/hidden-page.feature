@@ -1,10 +1,13 @@
 Feature: Juice Shop has a hidden pages
 
+  Background:
+    Given Haxxor goes to the Juice Shop
+
   Scenario Outline: Haxxor opens the hidden pages
-    When she opens the "<Hidden Page>"
+    When Haxxor opens the "<Hidden Page>" at "<url>"
     Then she sees she has solved the "<Hidden Page>" challenge
 
     Examples:
-      | Hidden Page    |
-      | Score Board    |
-      | Privacy Policy |
+      | Hidden Page    | url                                |
+      | Score Board    | /#/score-board                     |
+      | Privacy Policy | /#/privacy-security/privacy-policy |

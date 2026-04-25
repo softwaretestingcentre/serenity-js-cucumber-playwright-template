@@ -1,9 +1,9 @@
 import { Given, Then, When } from '@cucumber/cucumber';
+import { Ensure, equals } from '@serenity-js/assertions';
 import { Actor } from '@serenity-js/core';
+import { ModalDialog } from '@serenity-js/web';
 
 import { JuiceShop, ScoreBoard } from '../../test/juiceshop';
-import { ModalDialog } from '@serenity-js/web';
-import { Ensure, equals } from '@serenity-js/assertions';
 
 Given('{actor} goes to the Juice Shop', async (actor: Actor) =>
     actor.attemptsTo(
@@ -17,21 +17,21 @@ When('{pronoun} searches for {}', async (actor: Actor, searchTerm: string) =>
     )
 )
 
-Then('{pronoun} sees he/she/they has/have solved the {string} challenge', async (actor: Actor, challengeName: string) => {
+Then('{pronoun} sees he/she/they has/have solved the {string} challenge', async (actor: Actor, challengeName: string) => 
     actor.attemptsTo(
         ScoreBoard.confirmChallengeSolved(challengeName)
-    );
-})
-
-When('{pronoun} opens the {}', async (actor: Actor, hiddenPage: string) => {
-    actor.attemptsTo(
-        JuiceShop.goto(hiddenPage)
     )
-})
+)
 
-Then('{pronoun} should see no alert message', (actor: Actor) => {
+When('{actor} opens the {} at {}', async (actor: Actor, hiddenPage: string, url: string) => 
+    actor.attemptsTo(
+        JuiceShop.goto(hiddenPage, url)
+    )
+)
+
+Then('{pronoun} should see no alert message', async (actor: Actor) => 
     actor.attemptsTo(
         Ensure.that(ModalDialog.lastDialogState(), equals('absent'))
     )
-})
+)
 

@@ -1,12 +1,14 @@
+/* eslint-disable unicorn/prefer-string-replace-all */
 import { Task, Wait } from '@serenity-js/core';
-import { By, Click, Cookie,Enter,isVisible,Key,ModalDialog,Navigate, PageElement, Press } from '@serenity-js/web';
+import { By,  Click,  Cookie, Enter, isVisible, Key, ModalDialog, Navigate, PageElement, Press } from '@serenity-js/web';
 
-const pages = {
-    "Privacy Policy": "/#/privacy-security/privacy-policy",
-    "Score Board": "/#/score-board"
-}
 
 export const JuiceShop = {
+    pages: {
+        'Privacy Policy': '/#/privacy-security/privacy-policy',
+        'Score Board': '/#/score-board'
+    },
+
     open: () => 
         Task.where(
             '#actor opens the Juice Shop',
@@ -39,10 +41,11 @@ export const JuiceShop = {
             Wait.until(Search.result(), isVisible()),            
         ),
 
-    goto: (pageName) => 
+    goto: (pageName: string, url: string) => 
         Task.where(
             `#actor opens ${pageName}`,
-            Navigate.to(pages[pageName])
+            // Log.the(JuiceShop.pages),
+            Navigate.to(url.replace(/"/g, ''))
         )
 
 }
@@ -56,5 +59,8 @@ const Search = {
 
     result: () =>
         PageElement.located(By.css('app-search-result')).describedAs("'Search results"),
+
+    foobar: () =>
+        PageElement.located(By.role('checkbox', { name: 'foobar' })).describedAs("'Foobar"),
 
 }
